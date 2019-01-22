@@ -6,6 +6,7 @@
 
 static const char* TAG = "wifi_ap_c";
 
+// TODO: Create global event bus to hook into these local events
 static esp_err_t event_handler(void *ctx, system_event_t *event) {
     switch(event->event_id) {
     case SYSTEM_EVENT_AP_STACONNECTED:
@@ -31,7 +32,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event) {
 }
 
 
-void start_dhcp_server(){
+static void start_dhcp_server(){
     // initialize the tcp stack
     tcpip_adapter_init();
     // stop DHCP server
