@@ -2,7 +2,7 @@
 #include "update_server.h"
 #include "esp_event_loop.h"
 #include "esp_system.h"
-#include <string>
+#include "http_handler.h"
 
 static const char* TAG = "update_server";
 
@@ -28,27 +28,19 @@ void update_server::stop_webserver(){
     this->server = NULL;
 }
 
-esp_err_t hello_get_handler(httpd_req_t *req){
-    std::string response = "Hello World";
-    httpd_resp_send(req, response.c_str(), response.length());
-    return ESP_OK;
-}
-
-void update_server::register_handlers(){
+void register_handlers(httpd_handle_t server){
     // Set URI handlers
     ESP_LOGI(TAG, "Registering URI handlers");
-
-    httpd_uri_t hello = {
-        .uri       = "/hello",
-        .method    = HTTP_GET,
-        .handler   = hello_get_handler,
-    };
-    httpd_register_uri_handler(server, &hello);
+    
+    httpd_uri_t hello_h = hello_handler::get_handler();
+    httpd_register_uri_handler(server, &hello_h);
+    httpd_uri_t update_h = update_handler::get_handler();
+    httpd_register_uri_handler(server, &update_h);
 }
 
 void update_server::start(){
     start_webserver();
-    register_handlers();
+    register_handlers(server);
 }
 
 void update_server::stop(){
