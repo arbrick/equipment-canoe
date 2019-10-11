@@ -1,6 +1,6 @@
 #include "esp_log.h"
 #include "wifi_ap.h"
-#include "update_server.h"
+// #include "update_server.h"
 #include "esp_system.h"
 #include "nvs_flash.h"
 #include "esp_flash_partitions.h"
@@ -10,7 +10,7 @@
 #define SHA_256_HASH_LEN 32
 
 extern "C" {
-  void app_main(void);
+  void app_main();
 }
 
 static const char* TAG = "canoe-paddle-main";
@@ -83,12 +83,12 @@ void init(){
   wifi_ap* ap = new wifi_ap("canoe_paddle_0", "mypassword");
   ap->start();
 
-  update_server* server = new update_server();
-  server->start();
+  // update_server* server = new update_server();
+  // server->start();
   ESP_LOGI(TAG, "Startup Complete");
 }
 
-void app_main(void) {
+void app_main() {
   esp_log_level_set("*", ESP_LOG_DEBUG);
   init();
   ESP_LOGI(TAG, "Startup Complete");

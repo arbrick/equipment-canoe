@@ -4,12 +4,19 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${IDF_PATH}/components/**"
+                "${env:IDF_PATH}/components/**"
             ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": "",
+                "path": [
+                    "${workspaceRoot}",
+                    "${env:IDF_PATH}/components/**"
+                ]
+            },
             "defines": [],
             "macFrameworkPath": [
-                "/System/Library/Frameworks",
-                "/Library/Frameworks"
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
             ],
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c11",
